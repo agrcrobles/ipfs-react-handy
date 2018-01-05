@@ -1,0 +1,12 @@
+## node
+node_modules/**/*
+npm-debug.*
+
+## native
+.expo/*
+
+## osx
+.DS_Store
+
+## web
+dist
