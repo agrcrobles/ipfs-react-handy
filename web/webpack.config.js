@@ -19,7 +19,10 @@ const devServer = {
 };
 module.exports = {
   devServer,
-  entry: [path.resolve(__dirname, '../src/web.js')],
+  entry: [
+    'webpack-hot-middleware/client',
+    path.resolve(__dirname, '../src/web.js')
+  ],
   module: {
     rules: [
       babelLoaderConfiguration,
