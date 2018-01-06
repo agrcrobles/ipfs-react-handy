@@ -1,6 +1,7 @@
 ## node
 node_modules/**/*
 npm-debug.*
+yarn-error.log
 
 ## native
 .expo/*
@@ -9,4 +10,5 @@ npm-debug.*
 .DS_Store
 
 ## web
-dist
+web/dist/bundle.js
+web/dist/bundle.js.map
