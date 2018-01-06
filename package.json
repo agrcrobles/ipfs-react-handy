@@ -22,6 +22,7 @@
     "webpack": "^2.5.1",
     "webpack-dev-server": "^2.4.5"
   },
+  "homepage": "https://agrcrobles.github.io/push-to-talk/",
   "engines": {
 		"node": ">=6.0.0"
 	},

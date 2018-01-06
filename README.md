@@ -1,10 +1,15 @@
 # push-to-talk
 
-> a react app to talk when push, this is just an experiment an can fail
+> a react app to talk when push, this is just an experiment using IPFS + react and it can fail :)
+
+![buildstate](https://travis-ci.org/agrcrobles/push-to-talk.svg?branch=master)
 
 ## Overview
 
-TODO
+An image is worth a thousand words
+
+![buildstate](https://github.com/agrcrobles/push-to-talk/blob/master/assets/mj270_lg.png?raw=true
+)
 
 ## Run the web server
 
@@ -14,6 +19,8 @@ TODO
 ```bash
 # Install dependencies
 yarn
+# run the web app
+yarn web
 ```
 
 ## How it works?
