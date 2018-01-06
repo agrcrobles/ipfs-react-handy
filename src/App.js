@@ -3,92 +3,88 @@
 import * as React from "react";
 import IPFS from "ipfs";
 
-const stringToUse = "hello world from webpacked IPFS";
-
 import { StyleSheet, View, Text } from "react-native";
 
-import Mic from "./Mic";
+import ThemeProvider from "./ThemeProvider";
+import { connect } from "react-redux";
+
+import IPFSProvider from "./IPFSProvider";
 
 type State = {
-	id: any,
-	version: any,
-	protocol_version: any,
-	added_file_hash: any,
-	added_file_contents: *,
+	id?: string,
+	version?: string,
 };
-export default class App extends React.Component<*, State> {
+
+export function ipfsReducer(state = {}, action) {
+	switch (action.type) {
+		case "INIT_IPFS":
+			return {
+				repository: action.repository,
+			};
+		default:
+			return state;
+	}
+}
+class App extends React.Component<*, State> {
 	state = {
-		id: null,
 		version: null,
-		protocol_version: null,
-		added_file_hash: null,
-		added_file_contents: null,
+		id: null,
 	};
 	componentWillMount() {
-		const node = new IPFS({ repo: String(Math.random() + Date.now()) });
+		const repository = "QmUXexMPkZT1C8uynABEqLHpEdNJxfoZb9Vy1fJ6X9DYYs";
+		this.node = new IPFS({
+			repo: repository,
+		});
 
-		node.once("ready", () => {
+		this.props.dispatch({
+			type: "INIT_IPFS",
+			repository,
+		});
+
+		this.node.once("ready", () => {
 			console.log("IPFS node is ready");
 
-			node.id((err, res) => {
+			this.node.id((err, res) => {
 				if (err) {
 					throw err;
 				}
 				this.setState({
 					id: res.id,
 					version: res.agentVersion,
-					protocol_version: res.protocolVersion,
-				});
-			});
-
-			node.files.add([Buffer.from(stringToUse)], (err, filesAdded) => {
-				if (err) {
-					throw err;
-				}
-
-				const hash = filesAdded[0].hash;
-				this.setState({ added_file_hash: hash });
-
-				node.files.cat(hash, (err, data) => {
-					if (err) {
-						throw err;
-					}
-					this.setState({ added_file_contents: data });
 				});
 			});
 		});
 	}
-
+	node: *;
+	node = null;
 	render() {
 		return (
-			<View>
-				<View style={styles.banner}>
-					<Text style={styles.title}>Everything is working!</Text>
-					<Text style={styles.subtitle}>Your ID is {this.state.id}</Text>
+			<IPFSProvider IPFS={this.node}>
+				<View>
+					<View style={styles.banner}>
+						<Text style={styles.title}>Cool! everything is working fine!</Text>
+						<Text style={styles.subtitle}>Your ID is {this.state.id}</Text>
+					</View>
+					<Text style={[styles.info, styles.description]}>IPFS version</Text>
+					<Text style={styles.info}>{this.state.version}</Text>
+					<Text style={[styles.info, styles.description]}>
+						Record a voice message
+					</Text>
+					<ThemeProvider />
 				</View>
-				<Text style={[styles.info, styles.description]}>IPFS version</Text>
-				<Text style={styles.info}>{this.state.version}</Text>
-				<Text style={[styles.info, styles.description]}>
-					IPFS protocol version
-				</Text>
-				<Text style={styles.info}>{this.state.protocol_version}</Text>
-				<Text style={[styles.info, styles.description]}>FILE</Text>
-				<Text style={styles.info}>{this.state.added_file_hash}</Text>
-				<Text style={[styles.info, styles.description]}>FILE Hash</Text>
-				<Text style={styles.info}>{this.state.added_file_contents}</Text>
-				<Text style={[styles.info, styles.description]}>Mic</Text>
-				<Mic />
-			</View>
+			</IPFSProvider>
 		);
 	}
 }
+
+export default connect()(App);
 
 const styles = StyleSheet.create({
 	banner: {
 		backgroundColor: "#336699",
 		flexDirection: "column",
 		alignItems: "center",
-		justifyContent: "space-around",
+		justifyContent: "space-between",
 		padding: 16,
 	},
 	title: {
@@ -109,7 +105,7 @@ const styles = StyleSheet.create({
 		height: 40,
 	},
 	description: {
-		backgroundColor: "#4A148C",
+		backgroundColor: "#607D8B",
 		fontSize: 12,
 		color: "white",
 	},

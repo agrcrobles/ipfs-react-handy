@@ -12,12 +12,19 @@ const babelLoaderConfiguration = {
       cacheDirectory: true,
       // This aliases 'react-native' to 'react-native-web' and includes only
       // the modules needed by the app
-      presets: ['babel-preset-react-native'],
+      presets: ['babel-preset-react-native', 'stage-1'],
       plugins: ['react-native-web'],
     },
   },
 };
 
+const styleLoaderConfiguration = {
+  test: /\.css$/,
+  use: [
+    { loader: "style-loader" },
+    { loader: "css-loader" }
+  ]
+}
 // This is needed for webpack to import static images in JavaScript files
 const imageLoaderConfiguration = {
   test: /\.(gif|jpe?g|png|svg)$/,
@@ -32,4 +39,5 @@ const imageLoaderConfiguration = {
 module.exports = {
   imageLoaderConfiguration,
   babelLoaderConfiguration,
+  styleLoaderConfiguration,
 };

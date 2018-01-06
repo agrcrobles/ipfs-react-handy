@@ -112,7 +112,8 @@ module.exports = {
               "node": {
                   "extensions": [".js", ".web.js"]
               }
-          }
+          },
+          "import/core-modules": ["react-native"]
       },
     overrides: {
       files: ["**/__tests__/**/*.js", "**/?(*.)(spec|test).js"],

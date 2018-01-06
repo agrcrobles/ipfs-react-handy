@@ -24,7 +24,7 @@ if (module.hot) {
 	module.hot.accept();
 
 	// App registration and rendering
-	AppRegistry.registerComponent("ipfs-test", () => App);
+	AppRegistry.registerComponent("ipfs-test", () => renderApp);
 }
 
 AppRegistry.runApplication("ipfs-test", {

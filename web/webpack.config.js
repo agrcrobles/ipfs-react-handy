@@ -4,7 +4,8 @@ const path = require('path');
 
 const {
     imageLoaderConfiguration,
-    babelLoaderConfiguration
+    babelLoaderConfiguration,
+    styleLoaderConfiguration
  } = require('./loaderConfiguration');  
 
 const devServer = {
@@ -20,13 +21,13 @@ const devServer = {
 module.exports = {
   devServer,
   entry: [
-    'webpack-hot-middleware/client',
     path.resolve(__dirname, '../src/web.js')
   ],
   module: {
     rules: [
       babelLoaderConfiguration,
       imageLoaderConfiguration,
+      styleLoaderConfiguration,
     ],
   },
   output: {
