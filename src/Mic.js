@@ -145,8 +145,9 @@ const styles = StyleSheet.create({
 	micContainer: {
 		alignItems: "center",
 		flexDirection: "row",
-		justifyContent: "space-around",
-		margin: 5,
+		justifyContent: "space-between",
+		marginVertical: 5,
+		marginHorizontal: 10,
 	},
 	playerContainer: {
 		backgroundColor: "#CFD8DC",

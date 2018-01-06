@@ -1,9 +1,19 @@
 .btn {
     margin:0 10px;
 }
-.oscilloscope {
-  width: 220px;
+/* styling canvas */
+@media screen and (max-width: 780px) and (min-width: 100px) {
+  .oscilloscope {
+    width: 50vw;
+    height: 60;
+  }
 }
+@media screen and (max-width: 3200px) and (min-width: 780px) {
+  .oscilloscope {
+    width: 80vw;
+  }
+}
+/* styling audio */
 audio::-webkit-media-controls-panel {
   background: #CFD8DC
 }

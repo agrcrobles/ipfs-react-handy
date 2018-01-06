@@ -44,10 +44,14 @@ Every file can be found by human-readable names using a decentralized naming sys
 * [react](https://reactjs.org/) for building user interface
 * [react-native-web](https://github.com/necolas/react-native-web) to handle native like components in the web
 * [react-broadcast](https://github.com/ReactTraining/react-broadcast) to handle eficiently IPFS in the component tree
-* [js-ipfs](https://github.com/ipfs/js-ipfs) IPFS implementation in JavaScript 
+* [js-ipfs](https://github.com/ipfs/js-ipfs) IPFS implementation in JavaScript
 * [react-mic](https://github.com/hackingbeauty/react-mic) to record audio from a user's microphone and display as a sound oscillation.
-* [material-ui](material-ui.com) React components that implement Google's Material Design
-* ... among others cool ones like `redux`, etc
+* ... among others cool ones like `redux`, `material-ui` etc
+
+## URL
+
+![buildstate](https://github.com/agrcrobles/push-to-talk/blob/master/assets/qr.png?raw=true
+)
 
 ## License
 
