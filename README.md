@@ -6,12 +6,7 @@
 
 ## How it works?
 
-An image is worth a thousand words
-
-┌──────────────┐                ┌──────────────┐
-│   Browser    │ libp2p(WebRTC) │   Browser    │
-│              │◀──────────────▶│              │
-└──────────────┘                └──────────────┘
+TODO
 
 More info see https://github.com/libp2p/libp2p
 
