@@ -9,7 +9,9 @@ import { ReactMic } from "react-mic";
 
 import "./Mic.css";
 
-import { View, StyleSheet } from "react-native";
+import Player from "./Player";
+
+import { View, StyleSheet, Text } from "react-native";
 
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
@@ -22,8 +24,8 @@ class MicForm extends Component<
 		IPFS: *,
 	},
 	{
+		hash?: string,
 		record: boolean,
-		blobURL: *,
 		isRecording: boolean,
 	}
 > {
@@ -32,7 +34,6 @@ class MicForm extends Component<
 		this.node = this.props.IPFS;
 		this.state = {
 			record: false,
-			blobURL: null,
 			isRecording: false,
 		};
 		this.reader = new FileReader();
@@ -58,39 +59,30 @@ class MicForm extends Component<
 		console.log("You can tap into the onStart callback");
 	};
 
-	onLoadEnd = e => {
-		this.reader.removeEventListener("loadend", this.onLoadEnd, false);
-
-		if (e.error) {
-			throw new Error(e.error);
-		}
-		this.node.files.add(
-			[Buffer.from(this.reader.result)],
-			(err, filesAdded) => {
-				if (err) {
-					throw err;
-				}
-				const hash = filesAdded[0].hash;
-				this.setState({ added_file_hash: hash });
-				// this.node.files.get(hash, (err, data) => {
-				// 	if (err) {
-				// 		throw err;
-				// 	}
-				// 	console.log(data);
-				// 	this.setState({ added_file_contents: data });
-				// });
-			}
-		);
-	};
+	audio: *;
 	onStop = blobObject => {
-		this.reader = new FileReader();
-		this.reader.addEventListener("loadend", this.onLoadEnd, false);
-		this.reader.readAsArrayBuffer(blobObject.blob);
-		this.setState({
-			blobURL: blobObject.blobURL,
-		});
-	};
+		// this.reader.removeEventListener("loadend", this.onLoadEnd, false);
+		this.reader.addEventListener(
+			"loadend",
+			() => {
+				this.node.files.add(
+					[Buffer.from(this.reader.result)],
+					(err, filesAdded) => {
+						if (err) {
+							throw err;
+						}
 
+						const hash = filesAdded[0].hash;
+
+						// this.loadAudio(hash);
+						this.setState({ hash: hash });
+					}
+				);
+			},
+			false
+		);
+		this.reader.readAsArrayBuffer(blobObject.blob);
+	};
 	audioSource: *;
 	render() {
 		const { isRecording } = this.state;
@@ -127,16 +119,11 @@ class MicForm extends Component<
 						</FloatingActionButton>
 					</View>
 				</View>
-				{!!this.state.blobURL && (
-					<View style={styles.playerContainer}>
-						<audio
-							ref={audioSource => (this.audioSource = audioSource)}
-							controls="controls"
-							style={{ width: "100%" }}
-							src={this.state.blobURL}
-						/>
-					</View>
+				<Text style={[styles.description]}>Hash</Text>
+				{this.state.hash && (
+					<Text style={[styles.description]}>{this.state.hash}</Text>
 				)}
+				<Player />
 			</View>
 		);
 	}
@@ -154,6 +141,12 @@ const styles = StyleSheet.create({
 		padding: 10,
 		margin: 10,
 		borderRadius: 10,
+	},
+	description: {
+		paddingHorizontal: 12,
+		paddingVertical: 9,
+		backgroundColor: "#444",
+		color: "white",
 	},
 	actionMicContainer: {
 		flexDirection: "row",

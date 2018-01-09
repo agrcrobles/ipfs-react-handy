@@ -5,7 +5,7 @@ import React, { PureComponent } from "react";
 import { Broadcast } from "react-broadcast";
 
 class IPFSProvider extends PureComponent<{
-	children: React.Node,
+	children: *,
 	IPFS: *,
 }> {
 	render() {

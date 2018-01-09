@@ -11,11 +11,22 @@ import { connect } from "react-redux";
 import IPFSProvider from "./IPFSProvider";
 
 type State = {
-	id?: string,
-	version?: string,
+	id: ?string,
+	version: ?string,
+	ipfsBAddr: ?string,
 };
 
-export function ipfsReducer(state = {}, action) {
+type Action = {
+	type: "INIT_IPFS",
+	repository: *,
+};
+type IPFSState = {
+	repository?: string,
+};
+
+type Dispatch = (action: Action) => void;
+
+export function ipfsReducer(state: IPFSState = {}, action: Action) {
 	switch (action.type) {
 		case "INIT_IPFS":
 			return {
@@ -25,15 +36,35 @@ export function ipfsReducer(state = {}, action) {
 			return state;
 	}
 }
-class App extends React.Component<*, State> {
+class App extends React.Component<
+	{
+		dispatch: Dispatch,
+	},
+	State
+> {
 	state = {
 		version: null,
 		id: null,
+		ipfsBAddr: null,
 	};
 	componentWillMount() {
 		const repository = "QmUXexMPkZT1C8uynABEqLHpEdNJxfoZb9Vy1fJ6X9DYYs";
+		// const signalServer = ('/libp2p-webrtc-star/ip4/178.62.241.75/tcp/9090/ws/ipfs/' + config.Identity.PeerID)
+		// const Addresses = {
+		//   API: '/ip4/127.0.0.1/tcp/5001',
+		//   Swarm: ['/ip4/0.0.0.0/tcp/4001', signalServer],
+		//   Gateway: '/ip4/0.0.0.0/tcp/8080'
+		// }
 		this.node = new IPFS({
 			repo: repository,
+			// enable WebRTC support for js-ipfs in the Browser
+			config: {
+				Addresses: {
+					Swarm: [
+						"/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star",
+					],
+				},
+			},
 		});
 
 		this.props.dispatch({
@@ -48,15 +79,26 @@ class App extends React.Component<*, State> {
 				if (err) {
 					throw err;
 				}
+				const ipfsBAddr = res.addresses[0];
+
 				this.setState({
 					id: res.id,
 					version: res.agentVersion,
 				});
+
+				this.node.swarm.connect(ipfsBAddr).then(() => {
+					this.node.swarm.peers((err, peers) => {
+						console.log(peers);
+					});
+				});
 			});
 		});
 	}
+	componentWillUnmount() {
+		this.node.swarm.disconnect(this.state.ipfsBAddr);
+	}
 	node: *;
-	node = null;
+	node = {};
 	render() {
 		return (
 			<IPFSProvider IPFS={this.node}>

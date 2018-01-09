@@ -1,15 +1,19 @@
-# push-to-talk
+# ipfs-react-handy
 
-> a react app to talk when push, this is just an experiment using IPFS + react and it can fail :)
+> a react app to talk when tap on a button, this is just an experiment using IPFS + react and it can fail :)
 
 ![buildstate](https://travis-ci.org/agrcrobles/push-to-talk.svg?branch=master)
 
-## Overview
+## How it works?
 
 An image is worth a thousand words
 
-![buildstate](https://github.com/agrcrobles/push-to-talk/blob/master/assets/mj270_lg.png?raw=true
-)
+┌──────────────┐                ┌──────────────┐
+│   Browser    │ libp2p(WebRTC) │   Browser    │
+│              │◀──────────────▶│              │
+└──────────────┘                └──────────────┘
+
+More info see https://github.com/libp2p/libp2p
 
 ## Run the web server
 
@@ -22,10 +26,6 @@ yarn
 # run the web app
 yarn web
 ```
-
-## How it works?
-
-TODO
 
 ## How IPFS works?
 
@@ -48,11 +48,18 @@ Every file can be found by human-readable names using a decentralized naming sys
 * [react-mic](https://github.com/hackingbeauty/react-mic) to record audio from a user's microphone and display as a sound oscillation.
 * ... among others cool ones like `redux`, `material-ui` etc
 
-## URL
+## Scan URL ( for mobile devices )
 
-![buildstate](https://github.com/agrcrobles/push-to-talk/blob/master/assets/qr.png?raw=true
+![buildstate](https://github.com/agrcrobles/ipfs-react-handy/blob/master/assets/qr.png?raw=true
 )
+
+## Disclaimer
+
+Currently does not work in Firefox 
+
+## Contributing
+PR, stars ✭ and issue reporting, welcome
 
 ## License
 
-MIT
+MIT © Alejandro Garcia

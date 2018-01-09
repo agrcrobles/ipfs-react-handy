@@ -9,6 +9,6 @@ yarn-error.log
 ## osx
 .DS_Store
 
-## web
+## web 
 web/dist/bundle.js
 web/dist/bundle.js.map
