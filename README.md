@@ -2,7 +2,7 @@
 
 > a react app to talk when tap on a button, this is just an experiment using IPFS + react and it can fail :)
 
-![buildstate](https://travis-ci.org/agrcrobles/push-to-talk.svg?branch=master)
+![buildstate](https://travis-ci.org/agrcrobles/ipfs-react-handy.svg?branch=master)
 
 ## How it works?
 

@@ -119,10 +119,7 @@ class MicForm extends Component<
 						</FloatingActionButton>
 					</View>
 				</View>
-				<Text style={[styles.description]}>Hash</Text>
-				{this.state.hash && (
-					<Text style={[styles.description]}>{this.state.hash}</Text>
-				)}
+				<Text style={[styles.description]}>{this.state.hash}</Text>
 				<Player />
 			</View>
 		);
@@ -136,17 +133,12 @@ const styles = StyleSheet.create({
 		marginVertical: 5,
 		marginHorizontal: 10,
 	},
-	playerContainer: {
-		backgroundColor: "#CFD8DC",
-		padding: 10,
-		margin: 10,
-		borderRadius: 10,
-	},
 	description: {
 		paddingHorizontal: 12,
 		paddingVertical: 9,
 		backgroundColor: "#444",
 		color: "white",
+		height: 35,
 	},
 	actionMicContainer: {
 		flexDirection: "row",

@@ -48,28 +48,32 @@ class App extends React.Component<
 		ipfsBAddr: null,
 	};
 	componentWillMount() {
-		const repository = "QmUXexMPkZT1C8uynABEqLHpEdNJxfoZb9Vy1fJ6X9DYYs";
+		// const repository = "QmUXexMPkZT1C8uynABEqLHpEdNJxfoZb9Vy1fJ6X9DYYs";
 		// const signalServer = ('/libp2p-webrtc-star/ip4/178.62.241.75/tcp/9090/ws/ipfs/' + config.Identity.PeerID)
 		// const Addresses = {
 		//   API: '/ip4/127.0.0.1/tcp/5001',
 		//   Swarm: ['/ip4/0.0.0.0/tcp/4001', signalServer],
 		//   Gateway: '/ip4/0.0.0.0/tcp/8080'
 		// }
-		this.node = new IPFS({
-			repo: repository,
-			// enable WebRTC support for js-ipfs in the Browser
+
+		const repo = "ipfs-" + Math.random() + Date.now().toString();
+		const config = {
+			repo,
 			config: {
 				Addresses: {
 					Swarm: [
-						"/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star",
+						// "/dns4/wrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star",
+						"/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star",
 					],
 				},
 			},
-		});
+		};
+
+		this.node = new IPFS(config);
 
 		this.props.dispatch({
 			type: "INIT_IPFS",
-			repository,
+			repository: repo,
 		});
 
 		this.node.once("ready", () => {
